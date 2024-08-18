@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Wallet & Prediction Game</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+      }
+
+      .container,
+      .game-section {
+        text-align: center;
+        padding: 40px;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        width: 320px;
+        margin-bottom: 20px;
+      }
+
+      .wallet-header {
+        font-size: 18px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+      }
+
+      .wallet-header .icon {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: orange;
+        color: white;
+        border-radius: 50%;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .balance-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+        gap: 10px;
+      }
+
+      .balance {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .refresh-button {
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: blue;
+        color: white;
+        border-radius: 50%;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .action-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+        gap: 20px;
+      }
+
+      .action-buttons a {
+        flex: 1;
+        padding: 10px;
+        border-radius: 10px;
+        text-decoration: none;
+        color: #fff;
+        font-weight: bold;
+        text-align: center;
+      }
+
+      .deposit-button {
+        background-color: #4caf50;
+      }
+
+      .withdraw-button {
+        background-color: #f44336;
+      }
+
+      .timer {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 20px 0;
+      }
+
+      .prediction-buttons button {
+        margin: 10px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        transition: background-color 0.3s;
+      }
+
+      .prediction-buttons .big-button {
+        background-color: #4caf50;
+      }
+
+      .prediction-buttons .small-button {
+        background-color: #2196f3;
+      }
+
+      .prediction-buttons button:hover {
+        opacity: 0.8;
+      }
+
+      #result {
+        margin-top: 20px;
+        font-size: 18px;
+        font-weight: bold;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        font-size: 16px;
+      }
+
+      th,
+      td {
+        padding: 15px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      td {
+        padding: 12px;
+      }
+
+      .number-cell {
+        font-size: 30px;
+        font-weight: bold;
+      }
+
+      .big-text,
+      .small-text {
+        color: black;
+        font-weight: bold;
+      }
+
+      .green-text {
+        color: #18b660;
+      }
+
+      .red-text {
+        color: #fb5b5b;
+      }
+
+      .pagination-buttons {
+        margin-top: 20px;
+      }
+
+      .pagination-buttons button {
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        background-color: #4caf50;
+        margin: 0 10px;
+      }
+
+      /* Modal Styles */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.4);
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background-color: #fefefe;
+        margin: auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        max-width: 300px;
+        text-align: center;
+        border-radius: 10px;
+      }
+
+      .modal-close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .modal-close:hover,
+      .modal-close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+
+      .header-container {
+        background-color: #ff7f00;
+        width: 400px;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        color: white;
+        position: absolute;
+        top: 0; /* Position container at the top */
+        left: 50%;
+        transform: translateX(-50%); /* Center container horizontally */
+      }
+
+      .header-content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo-section h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: bold;
+        margin-right: 10px;
+      }
+
+      .language-section {
+        display: flex;
+        align-items: center;
+      }
+
+      .language-section img {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+      }
+
+      .language-section span {
+        margin-left: 10px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .back-button {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      .text-section h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .text-section p {
+        margin: 0;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="wallet-header">
+        <div class="icon">💰</div>
+        Wallet Balance
+      </div>
+      <div class="balance-container">
+        <div class="balance">200.00</div>
+        <div class="refresh-button">↻</div>
+      </div>
+      <div class="action-buttons">
+        <a href="Payment.html" class="deposit-button">Deposit</a>
+        <a onclick="playGame('Withdraw')" class="withdraw-button">Withdraw</a>
+      </div>
+    </div>
+
+    <!-- Timer Section -->
+    <div class="timer" id="timer">Loading time...</div>
+
+    <!-- Prediction Game Section -->
+    <div class="game-section">
+      <h2>Prediction Game</h2>
+      <p>Choose 'Big' or 'Small'</p>
+      <div class="prediction-buttons">
+        <button class="big-button" id="bigButton" onclick="playGame('big')">
+          Big
+        </button>
+        <button
+          class="small-button"
+          id="smallButton"
+          onclick="playGame('small')"
+        >
+          Small
+        </button>
+      </div>
+      <p id="result"></p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Number</th>
+            <th>Big/Small</th>
+          </tr>
+        </thead>
+        <tbody id="historyTable">
+          <!-- Table rows will be inserted here -->
+        </tbody>
+      </table>
+
+      <div class="pagination-buttons">
+        <button onclick="prevPage()">Back</button>
+        <button onclick="nextPage()">Next</button>
+      </div>
+    </div>
+
+    <!-- Modal for Wallet Refresh -->
+    <div id="walletModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeWalletModal()">&times;</span>
+        <p>Refresh successfully</p>
+      </div>
+    </div>
+
+    <!-- Modal for Prediction Game -->
+    <div id="gameModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close" onclick="closeGameModal()">&times;</span>
+        <p>
+          You are still not yet complete the first deposit. Kindly complete it
+          first.
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // Modal Functions
+      function showWalletModal() {
+        document.getElementById("walletModal").style.display = "flex";
+      }
+
+      function closeWalletModal() {
+        document.getElementById("walletModal").style.display = "none";
+      }
+
+      function showGameModal() {
+        document.getElementById("gameModal").style.display = "flex";
+      }
+
+      function closeGameModal() {
+        document.getElementById("gameModal").style.display = "none";
+      }
+
+      // Timer Function
+      function updateClock() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, "0");
+        const minutes = String(now.getMinutes()).padStart(2, "0");
+        const seconds = String(now.getSeconds()).padStart(2, "0");
+        document.getElementById(
+          "timer"
+        ).textContent = `${hours}:${minutes}:${seconds}`;
+      }
+
+      // Prediction Game Functions
+      const totalRows = 300;
+      const rowsPerPage = 10;
+      let currentPage = 0;
+      let period = 235482628274;
+      const history = [];
+
+      function generateRow() {
+        const number = Math.floor(Math.random() * 10);
+        const bigOrSmall = number >= 5 ? "Big" : "Small";
+        const color = Math.random() < 0.5 ? "green-text" : "red-text";
+        return { period: period--, number, bigOrSmall, color };
+      }
+
+      function updateHistory() {
+        for (let i = 0; i < totalRows; i++) {
+          history.push(generateRow());
+        }
+        history.reverse();
+      }
+
+      function updateHistoryTable() {
+        const historyTable = document.getElementById("historyTable");
+        historyTable.innerHTML = "";
+        const start = currentPage * rowsPerPage;
+        const end = start + rowsPerPage;
+
+        history.slice(start, end).forEach((item) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+          <td>${item.period}</td>
+          <td class="number-cell ${item.color}">${item.number}</td>
+          <td class="${item.bigOrSmall.toLowerCase()}-text">${
+            item.bigOrSmall
+          }</td>
+        `;
+          historyTable.appendChild(row);
+        });
+      }
+
+      function nextPage() {
+        if ((currentPage + 1) * rowsPerPage < totalRows) {
+          currentPage++;
+          updateHistoryTable();
+        }
+      }
+
+      function prevPage() {
+        if (currentPage > 0) {
+          currentPage--;
+          updateHistoryTable();
+        }
+      }
+
+      function playGame(choice) {
+        // Show prediction game modal
+        showGameModal();
+      }
+
+      function updateData() {
+        history.shift();
+        history.push(generateRow());
+        updateHistoryTable();
+      }
+
+      // Event Listeners
+      document
+        .querySelector(".refresh-button")
+        .addEventListener("click", function () {
+          showWalletModal();
+        });
+
+      window.onload = function () {
+        updateClock();
+        updateHistory();
+        updateHistoryTable();
+        setInterval(updateClock, 1000);
+        setInterval(updateData, 60000);
+      };
+
+      // Close modal when clicking outside of it
+      window.onclick = function (event) {
+        const walletModal = document.getElementById("walletModal");
+        const gameModal = document.getElementById("gameModal");
+        if (event.target === walletModal) {
+          closeWalletModal();
+        } else if (event.target === gameModal) {
+          closeGameModal();
+        }
+      };
+    </script>
+  </body>
+</html>

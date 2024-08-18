@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up Page</title>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #f0f0f0;
+        font-family: Arial, sans-serif;
+      }
+
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .signup-container {
+        background-color: #ff7f00; /* Orange background color */
+        width: 400px;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        color: white;
+      }
+
+      .tabs-container {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        cursor: pointer;
+      }
+
+      .tab-button {
+        width: 48%;
+        text-align: center;
+        padding: 10px;
+        font-weight: bold;
+        border-bottom: 2px solid transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+      }
+
+      .tab-button.active {
+        color: #fff;
+        border-bottom-color: #fff;
+      }
+
+      .form-group {
+        margin-bottom: 25px;
+        position: relative;
+      }
+
+      .form-group label {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 10px;
+        display: block;
+      }
+
+      .form-group input {
+        width: 100%;
+        padding: 12px 15px 12px 40px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+
+      .form-group input:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      .input-icon {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 18px;
+        color: #fff;
+      }
+
+      .input-icon.eye-icon {
+        right: 10px;
+        left: auto;
+        cursor: pointer;
+      }
+
+      .submit-button {
+        width: 100%;
+        padding: 15px;
+        background-color: #ff7f00;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      .submit-button:hover {
+        background-color: #e67300;
+      }
+
+      .form-section {
+        display: none;
+      }
+
+      .form-section.active {
+        display: block;
+      }
+
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-bottom: 20px;
+      }
+
+      .logo-section {
+        display: flex;
+        align-items: center;
+      }
+
+      .logo-section h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: bold;
+        margin-right: 10px;
+      }
+
+      .language-section {
+        display: flex;
+        align-items: center;
+      }
+
+      .language-section img {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+      }
+
+      .language-section span {
+        margin-left: 10px;
+        font-size: 14px;
+        font-weight: bold;
+      }
+
+      .back-button {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      .title-section h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      .title-section p {
+        margin: 0;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="signup-container">
+      <div class="back-button">←</div>
+      <div class="header">
+        <div class="logo-section">
+          <h1>BIGWIN</h1>
+        </div>
+        <div class="title-section">
+          <h1>Register</h1>
+          <p>Please register by phone number or email</p>
+        </div>
+        <div class="language-section">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/en/a/a4/Flag_of_the_United_States.svg"
+            alt="US Flag"
+          />
+          <span>EN</span>
+        </div>
+      </div>
+
+      <div class="tabs-container">
+        <div class="tab-button active" id="phone-tab">
+          <span>📱</span> Register your phone
+        </div>
+        <div class="tab-button" id="email-tab">
+          <span>✉️</span> Email registration
+        </div>
+      </div>
+
+      <div id="phone-form" class="form-section active">
+        <form>
+          <div class="form-group">
+            <label for="phone">Phone number</label>
+            <div class="input-icon">📱</div>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              placeholder="+91 Please enter the phone number"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="phone-password">Set password</label>
+            <div class="input-icon">🔒</div>
+            <input
+              type="password"
+              id="phone-password"
+              name="password"
+              placeholder="Set password"
+              required
+            />
+            <div class="input-icon eye-icon">👁️</div>
+          </div>
+          <div class="form-group">
+            <label for="confirm-phone-password">Confirm password</label>
+            <div class="input-icon">🔒</div>
+            <input
+              type="password"
+              id="confirm-phone-password"
+              name="confirm-password"
+              placeholder="Confirm password"
+              required
+            />
+            <div class="input-icon eye-icon">👁️</div>
+          </div>
+          <div class="form-group">
+            <label for="invite-code">Invite code</label>
+            <div class="input-icon">✉️</div>
+            <input
+              type="text"
+              id="invite-code"
+              name="invite-code"
+              placeholder="Please enter the invitation code"
+            />
+          </div>
+          <a type="submit" value="submit" href="home.html"  class="submit-button">Sign Up</a>
+        </form>
+      </div>
+
+      <div id="email-form" class="form-section">
+        <form>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <div class="input-icon">✉️</div>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Please enter your email address"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <label for="email-password">Set password</label>
+            <div class="input-icon">🔒</div>
+            <input
+              type="password"
+              id="email-password"
+              name="password"
+              placeholder="Set password"
+              required
+            />
+            <div class="input-icon eye-icon">👁️</div>
+          </div>
+          <div class="form-group">
+            <label for="confirm-email-password">Confirm password</label>
+            <div class="input-icon">🔒</div>
+            <input
+              type="password"
+              id="confirm-email-password"
+              name="confirm-password"
+              placeholder="Confirm password"
+              required
+            />
+            <div class="input-icon eye-icon">👁️</div>
+          </div>
+          <button type="submit" class="submit-button">Sign Up</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      const phoneTab = document.getElementById("phone-tab");
+      const emailTab = document.getElementById("email-tab");
+      const phoneForm = document.getElementById("phone-form");
+      const emailForm = document.getElementById("email-form");
+
+      phoneTab.addEventListener("click", () => {
+        phoneTab.classList.add("active");
+        emailTab.classList.remove("active");
+        phoneForm.classList.add("active");
+        emailForm.classList.remove("active");
+      });
+
+      emailTab.addEventListener("click", () => {
+        emailTab.classList.add("active");
+        phoneTab.classList.remove("active");
+        emailForm.classList.add("active");
+        phoneForm.classList.remove("active");
+      });
+    </script>
+  </body>
+</html>
